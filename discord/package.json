@@ -1,0 +1,9 @@
+{
+  "name": "cart-bot-discord",
+  "version": "0.0.1",
+  "description": "some shit",
+  "main": "app.js",
+  "dependencies": {
+    "eris": "^0.8.1"
+  }
+}
