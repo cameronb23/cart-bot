@@ -3,11 +3,15 @@ import Discord from 'discord.js';
 const cmds = [
   {
     key: 'list',
-    description: 'List all carts available for purchase'
+    description: 'List all carts available for purchase.'
   },
   {
     key: 'payment',
-    description: 'Update your payment details securely via Stripe'
+    description: 'Update your payment details securely via Stripe.'
+  },
+  {
+    key: 'help',
+    description: 'Lists all available CartBot commands.'
   }
 ];
 
