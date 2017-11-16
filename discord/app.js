@@ -47,9 +47,9 @@ client.on('message', message => { //When someone sends a discord message via dm 
 }
 
 
-async function start() {
+function start() {
   // start Discord client _and_ database connection
-  await initDb();
+  initDb();
   client.login("MzgwNTEyMjYzMTkyMTgyNzk0.DO5rLw.rHhcg1-hMcF9vfHxFsU9qOPtEik");
 }
 
