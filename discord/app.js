@@ -2,9 +2,10 @@ import chalk from 'chalk';
 import discord from 'discord.js';
 
 import { initDb } from './database';
-import Config from './config'; // config.json
+//import Config from './config'; // config.json
 
 const client = new Discord.Client();
+const fs = require("fs");
 
 function log(message) {
   const time = chalk.purple(`[${new Date().toString()}]`);
@@ -21,16 +22,35 @@ client.on('message', message => { //When someone sends a discord message via dm 
   let msg = message.content.toUpperCase();
 
   if (message.channel.type === "dm") {
-    message.channel.send('pong')
+    if (message.author.bot) return;
+    if(message.content.indexOf(config.prefix) !== 0) return;
+
+    // This is the best way to define args. Trust me.
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+
+    if (command = 'cart') {
+      try {
+        let commandFile = require(`./commands/${args}.js`);
+        commandFile.run(client, message, args);
+        log(`Message: ${msg}`);
+      } catch (err) {
+        message.channel.send('Invalid command');
+        console.error(err);
+        log(`Message: ${msg}`);
+      }
+    }
+      // The list of if/else is replaced with those simple 2 lines:
+
   }
-  log(`Message: ${msg}`);
+
 }
 
 
 async function start() {
   // start Discord client _and_ database connection
   await initDb();
-  client.login(Config.token);
+  client.login("MzgwNTEyMjYzMTkyMTgyNzk0.DO5rLw.rHhcg1-hMcF9vfHxFsU9qOPtEik");
 }
 
 start();
