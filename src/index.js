@@ -1,13 +1,10 @@
-//import chalk from 'chalk';
-//import discord from 'discord.js';
-const chalk = require('chalk');
-const discord = require('discord.js');
-const config = require('./config.json');
-//import { initDb } from './database';
-//import Config from './config'; // config.json
+import chalk from 'chalk';
+import discord from 'discord.js';
+import fs from 'fs';
+
+const config = require('../config.json');
 
 const client = new discord.Client();
-const fs = require("fs");
 
 function log(message) {
   const time = chalk.red(`[${new Date().toString()}] `);
