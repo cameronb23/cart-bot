@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import discord from 'discord.js';
+import moment from 'moment';
 import fs from 'fs';
 
 const config = require('../config.json');
@@ -7,8 +8,8 @@ const config = require('../config.json');
 const client = new discord.Client();
 
 function log(message) {
-  const time = chalk.red(`[${new Date().toString()}] `);
-  const prefix = chalk.blue('Discord');
+  const time = chalk.red(`[${moment().format('LTS')}]`);
+  const prefix = chalk.blue('[Discord] ');
   console.log(`${time + prefix} ${message}`);
 }
 
@@ -16,38 +17,39 @@ client.on('ready', () => {
   log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', message => { //When someone sends a discord message via dm or in the server.
+client.on('message', async (message) => { //When someone sends a discord message via dm or in the server.
   let sender = message.author;
-  let msg = message.content.toUpperCase();
+  let msg = message.content;
 
-  if (message.channel.type === "dm") {
-    if (message.author.bot) return;
-    if(message.content.indexOf(config.prefix) !== 0) return;
+  if (message.channel.type === 'dm') {
+    if (sender.bot) return;
+    if(msg.indexOf(config.prefix) !== 0) return;
 
     // This is the best way to define args. Trust me.
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const args = msg.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     if (command === 'cart') {
       try {
         let commandFile = require(`./commands/${args}.js`);
-        commandFile.run(client, message, args);
-        log(`Message: ${msg}`);
+        await commandFile.run(client, message, args);
       } catch (err) {
         message.channel.send('Invalid command');
-        console.error(err);
         log(`Message: ${msg}`);
       }
     }
-      // The list of if/else is replaced with those simple 2 lines:
 
+    message.channel.send('Invalid command');
+  } else {
+    message.channel.send('I only operate via DM.');
   }
 });
 
 
+
 function start() {
   // start Discord client _and_ database connection
-  client.login("MzgwNTEyMjYzMTkyMTgyNzk0.DO5rLw.rHhcg1-hMcF9vfHxFsU9qOPtEik");
+  client.login(process.env.DISCORD_TOKEN);
 }
 
 start();
