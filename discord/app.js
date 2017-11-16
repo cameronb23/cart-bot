@@ -1,14 +1,16 @@
-import chalk from 'chalk';
-import discord from 'discord.js';
-
-import { initDb } from './database';
+//import chalk from 'chalk';
+//import discord from 'discord.js';
+const chalk = require('chalk');
+const discord = require('discord.js');
+const config = require('./config.json');
+//import { initDb } from './database';
 //import Config from './config'; // config.json
 
-const client = new Discord.Client();
+const client = new discord.Client();
 const fs = require("fs");
 
 function log(message) {
-  const time = chalk.purple(`[${new Date().toString()}]`);
+  const time = chalk.red(`[${new Date().toString()}] `);
   const prefix = chalk.blue('Discord');
   console.log(`${time + prefix} ${message}`);
 }
@@ -29,7 +31,7 @@ client.on('message', message => { //When someone sends a discord message via dm 
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
-    if (command = 'cart') {
+    if (command === 'cart') {
       try {
         let commandFile = require(`./commands/${args}.js`);
         commandFile.run(client, message, args);
@@ -43,13 +45,11 @@ client.on('message', message => { //When someone sends a discord message via dm 
       // The list of if/else is replaced with those simple 2 lines:
 
   }
-
-}
+});
 
 
 function start() {
   // start Discord client _and_ database connection
-  initDb();
   client.login("MzgwNTEyMjYzMTkyMTgyNzk0.DO5rLw.rHhcg1-hMcF9vfHxFsU9qOPtEik");
 }
 
