@@ -21,15 +21,15 @@ client.on('message', async (message) => { //When someone sends a discord message
   let sender = message.author;
   let msg = message.content;
 
-  if (message.channel.type === 'dm') {
-    if (sender.bot) return;
-    if(msg.indexOf(config.prefix) !== 0) return;
+  if (sender.bot) return;
+  if(msg.indexOf(config.prefix) !== 0) return;
 
-    // This is the best way to define args. Trust me.
-    const args = msg.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+  // This is the best way to define args. Trust me.
+  const args = msg.slice(config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
 
-    if (command === 'cart') {
+  if (command === 'cart') {
+    if (message.channel.type === 'dm') {
       try {
         let commandFile = require(`./commands/${args}.js`);
         await commandFile.run(client, message, args);
@@ -43,8 +43,6 @@ client.on('message', async (message) => { //When someone sends a discord message
       }
     }
 
-    message.channel.send('Invalid command');
-  } else {
     message.channel.send('I only operate via DM.');
   }
 });
