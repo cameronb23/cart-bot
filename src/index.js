@@ -33,9 +33,13 @@ client.on('message', async (message) => { //When someone sends a discord message
       try {
         let commandFile = require(`./commands/${args}.js`);
         await commandFile.run(client, message, args);
+
+        return;
       } catch (err) {
         message.channel.send('Invalid command');
         log(`Message: ${msg}`);
+
+        return;
       }
     }
 
