@@ -35,12 +35,17 @@ client.on('message', message => { //When someone sends a discord message via dm 
         log(`Message: ${msg}`);
       } catch (err) {
         message.channel.send('Invalid command');
-        console.error(err);
         log(`Message: ${msg}`);
       }
+    } else {
+      message.channel.send('Invalid command');
+      log(`Message: ${msg}`);
     }
       // The list of if/else is replaced with those simple 2 lines:
 
+  } else {
+    message.channel.send('I only opervate via DM.');
+    log(`Message: ${msg}`);
   }
 });
 
