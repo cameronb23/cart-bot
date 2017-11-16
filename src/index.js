@@ -25,17 +25,19 @@ client.on('message', async (message) => { //When someone sends a discord message
   if  (msg.indexOf(config.prefix) !== 0) return;
 
   // This is the best way to define args. Trust me.
-  const args = msg.slice(config.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
+  const originalArgs = msg.slice(config.prefix.length).trim().split(/ +/g);
+  const command = originalArgs.shift().toLowerCase();
+  const subCommand = originalArgs.shift().toLowerCase();
 
   if (command === 'cart') {
     if (message.channel.type === 'dm') {
       try {
-        let commandFile = require(`./commands/${args}.js`);
-        await commandFile.run(client, message, args);
+        let commandFile = require(`./commands/${subCommand}.js`);
+        await commandFile.run(client, message, originalArgs);
 
         return;
       } catch (err) {
+        console.log(err);
         message.channel.send('Invalid command');
         log(`Message: ${msg}`);
 
