@@ -22,7 +22,7 @@ client.on('message', async (message) => { //When someone sends a discord message
   let msg = message.content;
 
   if (sender.bot) return;
-  if(msg.indexOf(config.prefix) !== 0) return;
+  if  (msg.indexOf(config.prefix) !== 0) return;
 
   // This is the best way to define args. Trust me.
   const args = msg.slice(config.prefix.length).trim().split(/ +/g);
@@ -47,11 +47,4 @@ client.on('message', async (message) => { //When someone sends a discord message
   }
 });
 
-
-
-function start() {
-  // start Discord client _and_ database connection
-  client.login(process.env.DISCORD_TOKEN);
-}
-
-start();
+client.login(process.env.DISCORD_TOKEN);
