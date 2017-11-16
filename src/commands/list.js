@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
                   .setTitle('Available Carts')
                   .setDescription('List of all current available carts\n')
                   .setColor(3660124)
-                  .setFooter('Powered by Cameron', 'https://cdn.discordapp.com/embed/avatars/0.png')
+                  .setFooter('Powered by Cameron', 'https://avatars2.githubusercontent.com/u/7783071?s=400&u=37248f71a15491e3fd860046f5c971f78d750068')
                   .setTimestamp(new Date());
 
     response.forEach(c => {
